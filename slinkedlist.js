@@ -36,17 +36,37 @@ class SingleLinkedList {
       this.length += 1
    }
 
+   shift() {
+      if (!this.head) {
+         return undefined
+      } else {
+         const temp = this.head
+         this.head = temp.next
+         temp.next = null
+         this.length -= 1
+         if (this.length === 0) {
+            this.tail = null
+            this.head = null
+         }
+         return temp
+      }
+   }
+
    pop() {
       let temp = this.head
       if (!this.head) {
-         return null
+         return undefined
       } else {
-         while (temp.next !== null) {
-            if (temp.next.next === null) {
+         while (temp.next) {
+            if (!temp.next.next) {
                const prevEnd = this.tail
                this.tail = temp
                temp.next = null
                this.length -= 1
+               if (this.length === 0) {
+                  this.head = null
+                  this.tail = null
+               }
                return prevEnd
             }
             temp = temp.next
@@ -68,4 +88,5 @@ console.log(list.tail)
 console.log(list.length)
 console.log(list)
 console.log(list.pop())
+console.log(list.shift())
 console.log(list)
