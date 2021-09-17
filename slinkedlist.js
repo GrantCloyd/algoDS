@@ -13,6 +13,7 @@ class SingleLinkedList {
    }
 
    unshift(val) {
+      if (typeof val !== "number") return false
       const node = new Node(val)
       if (!this.head) {
          this.head = node
@@ -25,6 +26,7 @@ class SingleLinkedList {
    }
 
    push(val) {
+      if (typeof val !== "number") return false
       const node = new Node(val)
       if (!this.head) {
          this.head = node
@@ -73,6 +75,28 @@ class SingleLinkedList {
          }
       }
    }
+
+   getNode(location) {
+      if (!this.head || typeof location !== "number" || location < 0 || location > this.length) {
+         return undefined
+      } else {
+         let temp = this.head
+         for (let i = 0; i <= location; i++) {
+            if (i === location) {
+               return temp
+            }
+            temp = temp.next
+         }
+      }
+   }
+
+   setNode(location, updatedValue) {
+      if (typeof updatedValue !== "number") return undefined
+      let node = this.getNode(location)
+      if (!node) return undefined
+      node.value = updatedValue
+      return node
+   }
 }
 
 const list = new SingleLinkedList()
@@ -80,6 +104,7 @@ list.unshift(18)
 list.unshift(13)
 list.push(17)
 list.push(24)
+
 list.unshift(2)
 list.push(10)
 
@@ -90,3 +115,5 @@ console.log(list)
 console.log(list.pop())
 console.log(list.shift())
 console.log(list)
+console.log(list.getNode(3))
+console.log(list.setNode(-1, 100))
