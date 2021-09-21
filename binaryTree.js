@@ -16,24 +16,24 @@ class BinarySearchTree {
       if (!this.root) {
          this.root = newNode
       } else {
-         let tempPrev = this.root
-         let tempCurr = this.root
-         while (tempCurr.value > newNode.value || tempCurr.value < newNode.value) {
-            if (tempCurr.value < newNode.value) {
-               tempCurr = tempCurr.right
-               if (tempCurr) {
-                  tempPrev = tempPrev.right
+         let temp = this.root
+         //  let tempCurr = this.root
+         while (temp.value > newNode.value || temp.value < newNode.value) {
+            if (temp.value < newNode.value) {
+               //    tempCurr = tempCurr.right
+               if (temp.right) {
+                  temp = temp.right
                   continue
                } else {
-                  tempPrev.right = newNode
+                  temp.right = newNode
                }
             } else {
-               tempCurr = tempCurr.left
-               if (tempCurr) {
-                  tempPrev = tempPrev.left
+               //    tempCurr = tempCurr.left
+               if (temp.left) {
+                  temp = temp.left
                   continue
                } else {
-                  tempPrev.left = newNode
+                  temp.left = newNode
                }
             }
             return this
@@ -43,13 +43,13 @@ class BinarySearchTree {
 }
 
 const tree = new BinarySearchTree()
-tree.insert(3)
 tree.insert(10)
-tree.insert(2)
 tree.insert(5)
-tree.insert(12)
-tree.insert(1)
-tree.insert(14)
+tree.insert(2)
+tree.insert(13)
+tree.insert(11)
+tree.insert(7)
+tree.insert(16)
 
 console.log(tree)
 console.log(tree.root.left)
