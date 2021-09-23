@@ -11,34 +11,46 @@ class BinarySearchTree {
       this.root = null
    }
 
-   insert(val) {
-      const newNode = new Node(val)
+   insert(input) {
+      const newNode = new Node(input)
       if (!this.root) {
          this.root = newNode
       } else {
          let temp = this.root
-         //  let tempCurr = this.root
          while (temp.value > newNode.value || temp.value < newNode.value) {
             if (temp.value < newNode.value) {
-               //    tempCurr = tempCurr.right
                if (temp.right) {
                   temp = temp.right
                   continue
-               } else {
-                  temp.right = newNode
                }
+               temp.right = newNode
             } else {
-               //    tempCurr = tempCurr.left
                if (temp.left) {
                   temp = temp.left
                   continue
-               } else {
-                  temp.left = newNode
                }
+               temp.left = newNode
             }
             return this
          }
       }
+   }
+
+   find(query) {
+      if (!this.root) return undefined
+      if (this.root.value === query) return this.root
+      let temp = this.root
+      while (temp && temp.value !== query) {
+         if (temp.value < query) {
+            temp = temp.right
+            continue
+         }
+         if (temp.value > query) {
+            temp = temp.left
+            continue
+         }
+      }
+      return temp && temp.value === query ? temp : undefined
    }
 }
 
@@ -54,3 +66,4 @@ tree.insert(16)
 console.log(tree)
 console.log(tree.root.left)
 console.log(tree.root.right)
+console.log(tree.find(11))
