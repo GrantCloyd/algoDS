@@ -1,3 +1,5 @@
+const qGen = require("./queue")
+
 class Node {
    constructor(value) {
       this.value = value
@@ -52,6 +54,40 @@ class BinarySearchTree {
       }
       return temp && temp.value === query ? temp : undefined
    }
+
+   breadthFirstSearch() {
+      //faster due to dequeue being an O(1) vs. shift needing to reindex and move elements
+      if (!this.root) return undefined
+      const queue = new qGen.Queue()
+      let temp = this.root
+      queue.enqueue(temp)
+      let data = []
+      while (queue.start) {
+         temp = queue.dequeue()
+         //because the queue class generates a node class as well, I need to dig down one level
+         // relabeled queue node to data instead of value to clarify which class is being worked with
+         // data refers to queue nodes, value refers to tree nodes
+         data.push(temp.data)
+         if (temp.data.left) queue.enqueue(temp.data.left)
+         if (temp.data.right) queue.enqueue(temp.data.right)
+      }
+      return data
+   }
+
+   BFS() {
+      let node = this.root,
+         data = [],
+         queue = []
+
+      queue.push(node)
+      while (queue.length) {
+         node = queue.shift()
+         data.push(node)
+         if (node.left) queue.push(node.left)
+         if (node.right) queue.push(node.right)
+      }
+      return data
+   }
 }
 
 const tree = new BinarySearchTree()
@@ -63,7 +99,9 @@ tree.insert(11)
 tree.insert(7)
 tree.insert(16)
 
-console.log(tree)
-console.log(tree.root.left)
-console.log(tree.root.right)
-console.log(tree.find(11))
+console.log("tree:", tree)
+// console.log(tree.root.left)
+// console.log(tree.root.right)
+// console.log(tree.find(11))
+console.log("bfs start w/ queue:", tree.breadthFirstSearch())
+console.log("bfs with arrays:", tree.BFS())
