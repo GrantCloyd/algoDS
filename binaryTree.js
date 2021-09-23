@@ -64,10 +64,11 @@ class BinarySearchTree {
       let data = []
       while (queue.start) {
          temp = queue.dequeue()
-         //because the queue class generates a node class as well, I need to dig down one level
+         //because the queue class generates a seperate node class as well, I need to dig down one level
          // relabeled queue node to data instead of value to clarify which class is being worked with
          // data refers to queue nodes, value refers to tree nodes
-         data.push(temp.data)
+         data.push(temp.data.value)
+         //change to temp.data to see node or temp.data.value to see numbers
          if (temp.data.left) queue.enqueue(temp.data.left)
          if (temp.data.right) queue.enqueue(temp.data.right)
       }
@@ -82,11 +83,26 @@ class BinarySearchTree {
       queue.push(node)
       while (queue.length) {
          node = queue.shift()
-         data.push(node)
+         data.push(node.value)
          if (node.left) queue.push(node.left)
          if (node.right) queue.push(node.right)
       }
       return data
+   }
+
+   depthFirstSearch(option = "preO") {
+      if (!this.root) return undefined
+      const data = []
+      this.traverse(this.root, data, option)
+      return data
+   }
+
+   traverse(node, data, option) {
+      if (option === "preO") data.push(node.value)
+      if (node.left) this.traverse(node.left, data, option)
+      if (option === "inO") data.push(node.value)
+      if (node.right) this.traverse(node.right, data, option)
+      if (option === "postO") data.push(node.value)
    }
 }
 
@@ -104,4 +120,7 @@ console.log("tree:", tree)
 // console.log(tree.root.right)
 // console.log(tree.find(11))
 console.log("bfs start w/ queue:", tree.breadthFirstSearch())
-console.log("bfs with arrays:", tree.BFS())
+//console.log("bfs with arrays:", tree.BFS())
+console.log("dfs pre-order", tree.depthFirstSearch())
+console.log("dfs in-order", tree.depthFirstSearch("inO"))
+console.log("dfs post-order", tree.depthFirstSearch("postO"))
