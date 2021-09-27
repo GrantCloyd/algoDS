@@ -105,7 +105,7 @@ class BinarySearchTree {
       if (option === "postO") data.push(node.value)
    }
 }
-
+ 
 const tree = new BinarySearchTree()
 tree.insert(10)
 tree.insert(5)
